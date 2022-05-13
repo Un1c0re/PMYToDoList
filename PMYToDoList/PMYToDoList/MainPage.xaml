@@ -1,0 +1,79 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ToDoList="clr-namespace:MyToDoList"
+             x:Class="MyToDoList.MainPage"
+             x:DataType="{x:Type ToDoList:MainPageViewModel}"
+             BackgroundColor="#2a2b34">
+
+    <StackLayout Margin="16, 16">
+        <Frame BackgroundColor="#1a191c" 
+               Padding="24" 
+               CornerRadius="15">
+
+            <Label Text="ToDo 609-01"
+                   HorizontalTextAlignment="Start"
+                   TextColor="White" FontSize="36"/>
+        </Frame>
+
+        <CollectionView ItemsSource="{Binding Tasks}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type ToDoList:TaskItem}">
+                    <ContentView >
+                        <StackLayout Margin="0, 4">
+                            <Grid ColumnDefinitions="Auto, *, Auto"
+                                ColumnSpacing="4"
+                                xct:CornerRadiusEffect.CornerRadius="15"
+                                BackgroundColor="#696092"
+                                Padding="8, 2">
+
+                                <CheckBox IsChecked="{Binding IsDone}"
+                                          Color="White"
+                                          Grid.Column="0">
+
+                                </CheckBox>
+                                <Editor FlexLayout.Grow="1"
+                                        AutoSize="TextChanges"
+                                        Text="{Binding Text}"
+                                        TextColor="White"
+                                        Grid.Column="1">
+                                </Editor>
+                                <Button
+                                        ImageSource="IconCross.png"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        BackgroundColor="#696092"
+                                        
+                                        Command=
+                                        "{
+                                            Binding RemoveTask,
+                                            Source=
+                                            {
+                                                RelativeSource AncestorType=
+                                                {
+                                                    x:Type ToDoList:MainPageViewModel
+                                                }
+                                            }
+                                        }"
+                                        CommandParameter="{Binding}"
+                                        Grid.Column="2">
+                                </Button>
+                            </Grid>
+                        </StackLayout>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Entry
+               PlaceholderColor="White"
+               Placeholder="Введите задачу"
+               Text="{Binding EntryText}"
+               TextColor="White"
+               ReturnCommand="{Binding AddTask}"
+               ReturnCommandParameter="{Binding EntryText}"
+               >
+        </Entry>
+    </StackLayout>
+
+</ContentPage>
