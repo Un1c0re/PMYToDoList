@@ -26,6 +26,7 @@ namespace MyToDoList
             {
                 if (_text == value)
                     return;
+
                 _text = value;
                 OnPropertyChanged("Text");
             }
@@ -40,12 +41,11 @@ namespace MyToDoList
             {
                 if (_isDone == value)
                     return;
+
                 _isDone = value;
                 OnPropertyChanged("IsDone");
             }
         }
-
-        public override string ToString() { return _text; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,23 +54,26 @@ namespace MyToDoList
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
 
 
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private string _entryText;
-        public string EntryText
+        public ICommand AddTask { get; protected set; }
+        public ICommand RemoveTask { get; protected set; }
+
+
+        private string _enteredText;
+        public string EnteredText
         {
-            get { return _entryText; }
+            get { return _enteredText; }
             set
             {
-                if (_entryText == value)
+                if (_enteredText == value)
                     return;
-                _entryText = value;
-                OnPropertyChanged("EntryText");
+
+                _enteredText = value;
+                OnPropertyChanged("EnteredText");
             }
         }
 
@@ -95,14 +98,11 @@ namespace MyToDoList
                 if (!String.IsNullOrWhiteSpace(text))
                 {
                     Tasks.Add(new TaskItem { Text = text.TrimStart() });
-                    EntryText = "";
+                    EnteredText = "";
                 }
             });
 
-            RemoveTask = new Command<TaskItem>((task) =>
-            {
-                Tasks.Remove(task);
-            });
+            RemoveTask = new Command<TaskItem>((task) => { Tasks.Remove(task); });
         }
 
 
@@ -112,9 +112,5 @@ namespace MyToDoList
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public ICommand AddTask { protected set; get; }
-        public ICommand RemoveTask { protected set; get; }
     }
-
 }

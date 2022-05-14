@@ -22,22 +22,10 @@
                     <ContentView >
                         <StackLayout Margin="0, 4">
                             <Grid ColumnDefinitions="Auto, *, Auto"
-                                ColumnSpacing="4"
                                 xct:CornerRadiusEffect.CornerRadius="15"
                                 BackgroundColor="#696092"
-                                Padding="8, 2">
+                                Padding="6">
 
-                                <CheckBox IsChecked="{Binding IsDone}"
-                                          Color="White"
-                                          Grid.Column="0">
-
-                                </CheckBox>
-                                <Editor FlexLayout.Grow="1"
-                                        AutoSize="TextChanges"
-                                        Text="{Binding Text}"
-                                        TextColor="White"
-                                        Grid.Column="1">
-                                </Editor>
                                 <Button
                                         ImageSource="IconCross.png"
                                         WidthRequest="40"
@@ -56,8 +44,27 @@
                                             }
                                         }"
                                         CommandParameter="{Binding}"
-                                        Grid.Column="2">
+                                    
+                                        Grid.Column="0">
                                 </Button>
+
+                                <Editor 
+                                        AutoSize="TextChanges"
+                                        Text="{Binding Text}"
+                                        
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        Grid.Column="1">
+                                </Editor>
+                                
+                           
+
+                                <CheckBox IsChecked="{Binding IsDone}"
+                                          Color="White"
+                                          Grid.Column="2">
+                                </CheckBox>
+
+
                             </Grid>
                         </StackLayout>
                     </ContentView>
@@ -66,13 +73,13 @@
         </CollectionView>
 
         <Entry
-               PlaceholderColor="White"
+               PlaceholderColor="#7f7a98"
                Placeholder="Введите задачу"
-               Text="{Binding EntryText}"
+            
+               Text="{Binding EnteredText}"
                TextColor="White"
                ReturnCommand="{Binding AddTask}"
-               ReturnCommandParameter="{Binding EntryText}"
-               >
+               ReturnCommandParameter="{Binding EnteredText}">
         </Entry>
     </StackLayout>
 
